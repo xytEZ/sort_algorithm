@@ -4,20 +4,24 @@
 # include <utility>
 # include <functional>
 
+# include "CallTraits.hpp"
+
 namespace Sort
 {
   template <typename T>
-  using Functor = std::function<bool (const T&, const T&)>;
+  using Comparator =
+    std::function<bool (typename TypeTraits::CallTraits<T>::ParamType,
+			typename TypeTraits::CallTraits<T>::ParamType)>;
   
   template <typename T>
   class ASorter
   {
   protected :
-    Functor<typename T::value_type> _functor;
+    Comparator<typename T::value_type> _comparator;
     
   protected :
-    ASorter(const Functor<typename T::value_type>&);
-    ASorter(Functor<typename T::value_type>&&);
+    ASorter(const Comparator<typename T::value_type>&);
+    ASorter(Comparator<typename T::value_type>&&);
     
   public :
     virtual ~ASorter();
@@ -25,13 +29,13 @@ namespace Sort
   };
 
   template <typename T>
-  ASorter<T>::ASorter(const Functor<typename T::value_type>& functor) :
-    _functor(functor)
+  ASorter<T>::ASorter(const Comparator<typename T::value_type>& comparator) :
+    _comparator(comparator)
   { }
   
   template <typename T>
-  ASorter<T>::ASorter(Functor<typename T::value_type>&& functor) :
-    _functor(std::move<Functor<typename T::value_type>>(functor))
+  ASorter<T>::ASorter(Comparator<typename T::value_type>&& comparator) :
+    _comparator(std::move<Comparator<typename T::value_type>>(comparator))
   { }
   
   template <typename T>

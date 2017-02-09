@@ -9,20 +9,20 @@ namespace Sort
   class Insertion : public ASorter<T>
   {
   public :
-    Insertion(const Functor<typename T::value_type>&);
-    Insertion(Functor<typename T::value_type>&&);
+    Insertion(const Comparator<typename T::value_type>&);
+    Insertion(Comparator<typename T::value_type>&&);
     virtual ~Insertion();
     virtual void sort(T&) const;
   };
 
   template <typename T>
-  Insertion<T>::Insertion(const Functor<typename T::value_type>& functor) :
-    ASorter<T>(functor)
+  Insertion<T>::Insertion(const Comparator<typename T::value_type>& comparator) :
+    ASorter<T>(comparator)
   { }
   
   template <typename T>
-  Insertion<T>::Insertion(Functor<typename T::value_type>&& functor) :
-    ASorter<T>(std::forward<Functor<typename T::value_type>>(functor))
+  Insertion<T>::Insertion(Comparator<typename T::value_type>&& comparator) :
+    ASorter<T>(std::forward<Comparator<typename T::value_type>>(comparator))
   { }
   
   template <typename T>
@@ -42,7 +42,7 @@ namespace Sort
 	typename T::value_type value = *rbeginNext;
 
 	while (rbeginNext != rendPrev
-	       && this->_functor(*rbeginNextNext, value)) 
+	       && this->_comparator(*rbeginNextNext, value)) 
 	  {
 	    *rbeginNext = *rbeginNextNext;
 	    ++rbeginNext;

@@ -9,20 +9,20 @@ namespace Sort
   class Selection : public ASorter<T>
   {
   public :
-    Selection(const Functor<typename T::value_type>&);
-    Selection(Functor<typename T::value_type>&&);
+    Selection(const Comparator<typename T::value_type>&);
+    Selection(Comparator<typename T::value_type>&&);
     virtual ~Selection();
     virtual void sort(T&) const;
   };
   
   template <typename T>
-  Selection<T>::Selection(const Functor<typename T::value_type>& functor) :
-    ASorter<T>(functor)
+  Selection<T>::Selection(const Comparator<typename T::value_type>& comparator) :
+    ASorter<T>(comparator)
   { }
   
   template <typename T>
-  Selection<T>::Selection(Functor<typename T::value_type>&& functor) :
-    ASorter<T>(std::forward<Functor<typename T::value_type>>(functor))
+  Selection<T>::Selection(Comparator<typename T::value_type>&& comparator) :
+    ASorter<T>(std::forward<Comparator<typename T::value_type>>(comparator))
   { }
   
   template <typename T>
@@ -41,7 +41,7 @@ namespace Sort
 
 	while (beginNext != end)
 	  {
-	    if (this->_functor(*max, *beginNext))
+	    if (this->_comparator(*max, *beginNext))
 	      max = beginNext;
 	    ++beginNext;
 	  }

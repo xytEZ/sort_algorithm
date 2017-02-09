@@ -9,8 +9,8 @@ namespace Sort
   class Quick : public ASorter<T>
   {
   public :
-    Quick(const Functor<typename T::value_type>&);
-    Quick(Functor<typename T::value_type>&&);
+    Quick(const Comparator<typename T::value_type>&);
+    Quick(Comparator<typename T::value_type>&&);
     virtual ~Quick();
     virtual void sort(T&) const;
 
@@ -25,13 +25,13 @@ namespace Sort
     };
 
   template <typename T>
-  Quick<T>::Quick(const Functor<typename T::value_type>& functor) :
-    ASorter<T>(functor)
+  Quick<T>::Quick(const Comparator<typename T::value_type>& comparator) :
+    ASorter<T>(comparator)
   { }
   
   template <typename T>
-  Quick<T>::Quick(Functor<typename T::value_type>&& functor) :
-    ASorter<T>(std::forward<Functor<typename T::value_type>>(functor))
+  Quick<T>::Quick(Comparator<typename T::value_type>&& comparator) :
+    ASorter<T>(std::forward<Comparator<typename T::value_type>>(comparator))
   { }
   
   template <typename T>
@@ -73,9 +73,9 @@ namespace Sort
 
     while (left != right)
       {
-	while (*left < pivot)
+	while (this->_comparator(pivot, *left))
 	  ++left;
-	while (*right > pivot)
+	while (this->_comparator(*right, pivot))
 	  --right;
 	if (left != right)
 	  std::swap(*left, *right);

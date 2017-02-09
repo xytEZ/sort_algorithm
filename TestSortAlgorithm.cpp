@@ -6,8 +6,6 @@
 
 #include "TestSortAlgorithm.hh"
 
-#include <iostream>
-
 namespace Test
 {
   void TestSortAlgorithm::setUp()
@@ -26,8 +24,8 @@ namespace Test
     _sortedContainer.emplace_back(20);
     _sortedContainer.emplace_back(36);
 
-    _functor = [](const TypeTraits::CallTraits<int>::ParamType& i,
-		  const TypeTraits::CallTraits<int>::ParamType& i2) -> bool
+    _comparator = [](TypeTraits::CallTraits<int>::ParamType i,
+		     TypeTraits::CallTraits<int>::ParamType i2) -> bool
       { return i > i2; };
   }
   
@@ -38,7 +36,7 @@ namespace Test
     Sort::ASorter<ContainerValue<int>> *sorter;
     ContainerValue<int> container;
 
-    sorter = new Sort::Bubble<ContainerValue<int>>(_functor);
+    sorter = new Sort::Bubble<ContainerValue<int>>(_comparator);
     container.assign(_noSortedContainer.cbegin(), _noSortedContainer.cend());
     sorter->sort(container);
 
@@ -52,7 +50,7 @@ namespace Test
     Sort::ASorter<ContainerValue<int>> *sorter;
     ContainerValue<int> container;
 
-    sorter = new Sort::Selection<ContainerValue<int>>(_functor);
+    sorter = new Sort::Selection<ContainerValue<int>>(_comparator);
     container.assign(_noSortedContainer.cbegin(), _noSortedContainer.cend());
     sorter->sort(container);
 
@@ -66,7 +64,7 @@ namespace Test
     Sort::ASorter<ContainerValue<int>> *sorter;
     ContainerValue<int> container;
 
-    sorter = new Sort::Insertion<ContainerValue<int>>(_functor);
+    sorter = new Sort::Insertion<ContainerValue<int>>(_comparator);
     container.assign(_noSortedContainer.cbegin(), _noSortedContainer.cend());
     sorter->sort(container);
 
@@ -80,7 +78,7 @@ namespace Test
     Sort::ASorter<ContainerValue<int>> *sorter;
     ContainerValue<int> container;
 
-    sorter = new Sort::Merge<ContainerValue<int>>(_functor);
+    sorter = new Sort::Merge<ContainerValue<int>>(_comparator);
     container.assign(_noSortedContainer.cbegin(), _noSortedContainer.cend());
     sorter->sort(container);
 
@@ -94,7 +92,7 @@ namespace Test
     Sort::ASorter<ContainerValue<int>> *sorter;
     ContainerValue<int> container;
 
-    sorter = new Sort::Quick<ContainerValue<int>>(_functor);
+    sorter = new Sort::Quick<ContainerValue<int>>(_comparator);
     container.assign(_noSortedContainer.cbegin(), _noSortedContainer.cend());
     sorter->sort(container);
 

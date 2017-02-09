@@ -6,7 +6,7 @@ namespace TypeTraits
   template <typename T>
   struct CallTraits
   {
-    template <typename U, bool IsRef>
+    template <typename U, bool isRef>
     struct CallTraitsImpl;
 
     template <typename U>

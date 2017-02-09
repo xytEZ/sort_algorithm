@@ -6,6 +6,7 @@
 # include <functional>
 # include <list>
 
+# include "ASorter.hpp"
 # include "CallTraits.hpp"
 
 namespace Test
@@ -23,16 +24,11 @@ namespace Test
   private :
     template <typename T>
     using ContainerValue = std::list<T>;
-
-    template <typename T>
-    using Functor =
-      std::function<bool (const TypeTraits::CallTraits<int>::ParamType&,
-			  const TypeTraits::CallTraits<int>::ParamType&)>;
     
   private :
     ContainerValue<int> _noSortedContainer;
     ContainerValue<int> _sortedContainer;
-    Functor<int> _functor;
+    Sort::Comparator<int> _comparator;
 
   public :
     void setUp();

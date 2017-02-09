@@ -9,8 +9,8 @@ namespace Sort
   class Merge : public ASorter<T>
   {
   public :
-    Merge(const Functor<typename T::value_type>&);
-    Merge(Functor<typename T::value_type>&&);
+    Merge(const Comparator<typename T::value_type>&);
+    Merge(Comparator<typename T::value_type>&&);
     virtual ~Merge();
     virtual void sort(T&) const;
     
@@ -19,13 +19,13 @@ namespace Sort
   };
 
   template <typename T>
-  Merge<T>::Merge(const Functor<typename T::value_type>& functor) :
-    ASorter<T>(functor)
+  Merge<T>::Merge(const Comparator<typename T::value_type>& comparator) :
+    ASorter<T>(comparator)
   { }
   
   template <typename T>
-  Merge<T>::Merge(Functor<typename T::value_type>&& functor) :
-    ASorter<T>(std::forward<Functor<typename T::value_type>>(functor))
+  Merge<T>::Merge(Comparator<typename T::value_type>&& comparator) :
+    ASorter<T>(std::forward<Comparator<typename T::value_type>>(comparator))
   { }
   
   template <typename T>
@@ -58,15 +58,15 @@ namespace Sort
 
     while (leftBegin != leftEnd && rightBegin != rightEnd)
       {
-	if (*leftBegin < *rightBegin)
-	  {
-	    result.push_back(std::move(*leftBegin));
-	    ++leftBegin;
-	  }
-	else
+	if (this->_comparator(*leftBegin, *rightBegin))
 	  {
 	    result.push_back(std::move(*rightBegin));
 	    ++rightBegin;
+	  }
+	else
+	  {
+	    result.push_back(std::move(*leftBegin));
+	    ++leftBegin;
 	  }
       }
     while (leftBegin != leftEnd)
