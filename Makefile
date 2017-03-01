@@ -1,24 +1,22 @@
-CXX = clang++
-
-RM = rm -f
-
-CFLAGS += -Wextra -Wall
-CFLAGS += -I.
-CXXFLAGS += -std=c++11
-
-LDFLAGS = -lcppunit -ldl
-
 NAME = testSortAlgorithm
+
+CXX = clang++
+CFLAGS = -W -Wall -Wextra 
+CXXFLAGS = -std=c++11
+
+TESTLIBS = -lcppunit
 
 SRCS =  main.cpp \
 	TestSortAlgorithm.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
+RM = rm -f
+
 all: $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CXX) $(OBJS) -o $(NAME) $(TESTLIBS)
 
 clean:
 	$(RM) $(OBJS)

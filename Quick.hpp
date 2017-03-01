@@ -63,9 +63,10 @@ namespace Sort
   }
 
   template <typename T>
-  typename T::iterator Quick<T>::partition(T& container,
-					   const typename T::iterator& first,
-					   const typename T::iterator& last) const
+  typename T::iterator
+  Quick<T>::partition(T& container,
+		      const typename T::iterator& first,
+		      const typename T::iterator& last) const
   {
     typename T::value_type pivot = *first;
     typename T::iterator left = first;
